@@ -8,7 +8,7 @@ pub fn main() {
 
     println!("Guess the number from 1 to 100!");
 
-    let mut guess_count: i32 = 1;
+    let mut guess_count = 1;
     while guess_count < 1000{
         let mut guess = String::new();
 
@@ -19,6 +19,9 @@ pub fn main() {
         let guess_int: i32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
+                if guess.trim() == "quit" {
+                    break;
+                }
                 println!("Please input a valid number!");
                 continue;
             }
