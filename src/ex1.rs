@@ -1,4 +1,5 @@
 use std::io::stdin;
+use std::cmp::Ordering;
 use::rand::{thread_rng, Rng};
 
 pub fn main() {
@@ -7,7 +8,7 @@ pub fn main() {
 
     println!("Guess the number from 1 to 100!");
 
-    let mut guess_count: isize = 1;
+    let mut guess_count: i32 = 1;
     while guess_count < 1000{
         let mut guess = String::new();
 
@@ -15,7 +16,7 @@ pub fn main() {
         stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");
-        let guess_int: isize = match guess.trim().parse() {
+        let guess_int: i32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
                 println!("Please input a valid number!");
@@ -23,17 +24,23 @@ pub fn main() {
             }
         };
     //expect("Please type a number!");
-        if (guess_int < 1) | (guess_int > 100) {
+        if guess_int < 1 || guess_int > 100 {
             println!("Guess must be between 1 and 100!");
             continue;
-        } else if guess_int == rand_number {
-            println!("Success - it only took you {guess_count} guesses!");
-            break;
-        } else if guess_int > rand_number {
-            println!("Try Again guess too high!");
-        } else {
-            println!("Try Again guess too low!");
         }
+        match rand_number.cmp(&guess_int) {
+            Ordering::Equal => {
+                println!("Success - it only took you {} guesses!", &guess_count);
+                break;
+            },
+            Ordering::Less => { // rand_number less than guess_int
+                println!("Try Again guess too high!");
+            },
+            Ordering::Greater => { // rand_number greater than guess int
+                println!("Try Again guess too low!");
+            }
+
+        };
         guess_count += 1;
 
 
