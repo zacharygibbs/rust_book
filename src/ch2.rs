@@ -16,7 +16,7 @@ pub fn main() {
         stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");
-        let guess_int: i32 = match guess.trim().parse() {
+        let guess: i32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
                 if guess.trim() == "quit" {
@@ -27,11 +27,11 @@ pub fn main() {
             }
         };
     //expect("Please type a number!");
-        if guess_int < 1 || guess_int > 100 {
+        if guess < 1 || guess > 100 {
             println!("Guess must be between 1 and 100!");
             continue;
         }
-        match rand_number.cmp(&guess_int) {
+        match rand_number.cmp(&guess) {
             Ordering::Equal => {
                 println!("Success - it only took you {} guesses!", &guess_count);
                 break;

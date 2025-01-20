@@ -1,7 +1,8 @@
 use std::error::Error;
 use std::process;
 
-mod ex1;
+mod ch2;
+mod ch3;
 
 type Result<T> = std::result::Result<T, Box<dyn Error>>;
 
@@ -23,8 +24,11 @@ fn run(config: Config) -> Result<()> {
         Some("-h") | Some("--help") => {
             print_help();
         }
-        Some("1") => {
-            ex1::main();
+        Some("2") => {
+            ch2::main();
+        }
+        Some("3") => {
+            ch3::main();
         }
         None => {
             print_help();
@@ -39,7 +43,8 @@ fn run(config: Config) -> Result<()> {
 fn print_help() {
     println!("Usage: rust_book <command>");
     println!("Commands:");
-    println!("  1     Run the number guessing game");
+    println!("  2     Run the number guessing game");
+    println!("  3     variables, types etc.");
     println!("  -h    Show this help message");
 }
 
