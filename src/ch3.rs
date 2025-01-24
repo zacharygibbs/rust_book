@@ -1,5 +1,3 @@
-use std::io;
-
 pub fn main() {
     //https://rust-book.cs.brown.edu/ch03-02-data-types.html
     //Mutability
@@ -13,17 +11,21 @@ pub fn main() {
 
     //Shadowing
     let y = 5;
+    println!("{y}");
     let y = "I am a shadow of my former self!";
     println!("y = {}", y);
 
     //Types
     let five: i8 = 5; //(-127 to 127)
+    println!("{five}");
     let five: u8 = 5;//(0 to 255)
+    println!("{five}");
     // i8, u8 - i16/u16, i32/u32, i64/u64, i128/u128, isize/usize
     // isize / usize depends on whether you're on a 32 or 64 bit system
 
     let one_thousand: i32 = 1_000; // you don't have to explicitly call
-    // out the i32 - rust will use that as default
+    println!("{one_thousand}");
+    // out the i32 - rustprintln!("{five}"); will use that as default
     //can also use an underscore as a visual separator.
 
     // other types (ints)
@@ -39,7 +41,7 @@ pub fn main() {
     //floats
     let x = 2.0; //f64 (double)
     let y: f32 = 2.1; // f32 (single)
-
+    println!("{x}, {y}");
     let z = 5/3;
     println!("5/3 = {}", z);
 
@@ -49,27 +51,28 @@ pub fn main() {
     let z = 43 % 5; // type i32
     println!("43 % 5 = {}", z);
 
-    let z= z as f64; // convert types..
+    // let z= z as f64; // convert types..
 
-    let z = (1 as f64) * 4.0;
+    // let z = (1 as f64) * 4.0;
 
-    let c = 'z';
+    // let c = 'z';
     //let z: char = "Zss"; // this shows error..
-    let heart_eyed_cat = '😻';
+    // let heart_eyed_cat = '😻';
 
     // Floating point 
-    let floatnum: f32 = 3.14159265358;
+//    let floatnum: f32 = 3.14159265358;
 
     // boolean
-    let t: bool = true;
+  //  let t: bool = true;
 
     //char
-    let cz: char = 'a';
+    //let cz: char = 'a';
 
     //tuple  - a list of items, they don't have to be the same type..
 
     let mytuple: (i32, f32, String) = (1, 2.0, "asdf".to_string()); // explicit define type
     let mytuple2 = (1, 2.0, "asdf".to_string()); //imply type..
+    println!("{:?} and {:?}", mytuple, mytuple2);
 
     let mut mut_tuple: (i32, bool) = (5, false);
 
@@ -88,11 +91,12 @@ pub fn main() {
     let arr1 = [1, 2, 3, 4]; // implied type and length
     let arr2: [i32; 4] = [5, 6, 7, 8]; // explicitly define type and length
 
+
     // let arr3 = [3.0, 4]; // errors out because can't have a float and an int..
 
     let mut arr3 = [4.0, 5.0, 6.0];
 
-    println!("arr3 = {:?}", arr3);
+    println!("arr3 = {:?}, arr1 = {:?}, arr2 = {:?}", arr3, arr1, arr2);
 
     arr3[2] = 25.3324234; // can change 3rd item (2nd index..) if the arr is set as mutable.
 
@@ -101,8 +105,9 @@ pub fn main() {
     // But rust arrays cannot grow in size - so often times the "Vector" type is what you really want..
     //Can also have string arrays
 
-    let months = ["January", "February", "March", "April", "May", "June", "July",
-        "August", "September", "October", "November", "December"];
+    // let months = ["January", "February", "March", "April", "May", "June", "July",
+    //     "August", "September", "October", "November", "December"];
+
 
 
     // Checking Array Bounds on the fly (per user input) - program panics if outside of bounds
@@ -284,7 +289,7 @@ fn fibonacci(n: i32) -> i128 {
     let mut fib_prev = 0;
     let mut fib = 1;
 
-    for i in 1..n {
+    for _i in 1..n {
         let fib0 = fib;
         fib = fib + fib_prev;
         fib_prev = fib0;

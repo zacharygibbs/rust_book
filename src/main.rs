@@ -3,6 +3,7 @@ use std::process;
 
 mod ch2;
 mod ch3;
+mod ch4;
 
 type Result<T> = std::result::Result<T, Box<dyn Error>>;
 
@@ -30,6 +31,9 @@ fn run(config: Config) -> Result<()> {
         Some("3") => {
             ch3::main();
         }
+        Some("4") => {
+            ch4::main();
+        }
         None => {
             print_help();
         }
@@ -45,6 +49,7 @@ fn print_help() {
     println!("Commands:");
     println!("  2     Run the number guessing game");
     println!("  3     variables, types etc.");
+    println!("  4     Ownership and Memory");
     println!("  -h    Show this help message");
 }
 
