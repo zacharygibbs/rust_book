@@ -106,6 +106,95 @@ pub fn main() -> () {
     // is a non owning pointer, cannot take ownership
     // through it.
     println!("v={:?}, s_ref={}, s={}", v, s_ref, s);
+
+    // Rust can still get confused..
+    let mut name = (
+        String::from("Ferris"),
+        String::from("Rustacean")
+    );
+    name.1.push_str(", Esq."); // error because &name as a whole was borrowed and later used..
+    let first = get_first(&name); // push first instead of after extracting last and we're good to go.
+    println!("{first} {}", name.1);
+
+    // SLICES - https://rust-book.cs.brown.edu/ch04-04-slices.html
+
+    //To motivate why slices are useful, let’s work through a small programming problem:
+    // write a function that takes a string of words separated by spaces and returns
+    // the first word it finds in that string. If the function doesn’t find a space in the string,
+    // the whole string must be one word, so the entire string should be returned. Without slices,
+    // we might write the signature of the function like this:
+
+    let test_str = "The quick red fox jumped over the lazy brown dog.".to_string();
+
+    let mut out_vec = vec![];
+    let mut out_str = "".to_string();
+    for (_ix, chr) in test_str.chars().enumerate() {
+        //if !chr.is_whitespace() {
+        if (chr != ' ') & ( _ix != test_str.len() - 1 )  { // single quotes is a char literal..
+            out_str.push_str(&chr.to_string());
+        } else {
+            if _ix == test_str.len() - 1 {
+                out_str.push_str(&chr.to_string());
+                //make sure we don't miss the last character..
+            }
+            out_vec.push(out_str.clone());
+            out_str = "".to_string();
+        }
+
+    }
+
+    println!("{:?}", out_vec);
+
+
+    //Rust Slices & Ranges https://rust-book.cs.brown.edu/ch04-04-slices.html
+
+    //let s: String = "Zimbabwe Ole!".to_string();
+    let s = "Zimbabwe Ole!";
+
+    println!("{}", &s[..8]); // don't need to explicity say 0; or the last val..
+    println!("{}", &s[9..]);
+    let frst_word = first_word(&s);
+
+    println!("{}, {}", frst_word, frst_word.len());
+
+    // good enough!
+
+    // Array Slices
+
+    let ar = [5.4, 3.8, 12.3, 11.2, 15.0, 12.0, 1.0];
+
+    println!("{:?}", &ar[2..5]);
+
+    // Wrapping up - Ownership https://rust-book.cs.brown.edu/ch04-05-ownership-recap.html
+
+    type Document = Vec<String>;
+
+    fn new_document(words: Vec<String>) -> Document {
+        words
+    }
+
+    fn add_word(this: &mut Document, word: String) {
+        this.push(word);
+    }
+
+    fn get_words(this: &Document) -> &[String] {
+        this.as_slice()
+    }
+
+    let mut doc = new_document(vec!["hello".to_string()]);
+    //add_word(&mut doc, "world".to_string());
+
+    println!("{:?}", get_words(&doc));
+
+    // .to_vec() converts &[String] to Vec<String> by cloning each string
+    let words_copy = get_words(&doc).to_vec();
+    let mut doc2 = new_document(words_copy);
+    add_word(&mut doc2, "world".to_string());
+    println!("{:?}", get_words(&doc2));
+
+    // The modification to `d2` does not affect `d`
+    assert!(!get_words(&doc).contains(&"world".into()));
+
 }
 
 fn greet_return(g1: String, g2: String) -> (String, String) {
@@ -137,4 +226,18 @@ fn add_big_strings(dst: &mut Vec<String>, src: &[String]) {
 
 fn find_longest_length(dst: &Vec<String>) -> usize {
     dst.iter().max_by_key(|s| s.len()).unwrap().len()
+}
+
+
+fn get_first(name: &(String, String)) -> &String {
+    &name.0
+}
+
+fn first_word(s: &str) -> &str {
+    for (ix, chr) in s.chars().enumerate(){
+        if chr == ' ' {
+            return &s[..ix];
+        }
+    }
+    &s[..]
 }
