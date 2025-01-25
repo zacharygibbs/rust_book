@@ -181,7 +181,7 @@ pub fn main() -> () {
         this.as_slice()
     }
 
-    let mut doc = new_document(vec!["hello".to_string()]);
+    let doc = new_document(vec!["hello".to_string()]);
     //add_word(&mut doc, "world".to_string());
 
     println!("{:?}", get_words(&doc));
