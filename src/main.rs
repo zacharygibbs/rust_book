@@ -5,6 +5,8 @@ mod ch2;
 mod ch3;
 mod ch4;
 mod ch5;
+mod ch6;
+mod ch7;
 
 type Result<T> = std::result::Result<T, Box<dyn Error>>;
 
@@ -38,6 +40,9 @@ fn run(config: Config) -> Result<()> {
         Some("5") => {
             ch5::main();
         }
+        Some("6") => {
+            ch6::main();
+        }
         None => {
             print_help();
         }
@@ -55,6 +60,7 @@ fn print_help() {
     println!("  3     variables, types etc.");
     println!("  4     Ownership and Memory");
     println!("  5     Strucs to structure related data");
+    println!("  6     Enums");
     println!("  -h    Show this help message");
 }
 

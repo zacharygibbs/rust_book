@@ -1,5 +1,6 @@
 
 // example struct
+#[allow(dead_code)]
 struct User {
     active: bool,
     username: String,
@@ -18,6 +19,7 @@ fn build_user(email: String, username: String) -> User {
 
 
 //Tuple Structs - no named fields..
+#[allow(dead_code)]
 struct Color(i32, i32, i32);
 struct Point {x: i32, y: i32}
 
@@ -133,7 +135,7 @@ pub fn main() {
     // two *'s , 1 to get rid of the reference&, the next to go from r -> Box on heap
     assert_eq!(area1, area2);
     println!("{} {}", area1, area2);
-    &r.set_width(5);
+    let _ = &r.set_width(5);
     println!("{}", r.area());
     //mutable reference is downgraded into a shared ref
     // if you did this, you couldn't call set_width..
@@ -141,7 +143,7 @@ pub fn main() {
     dbg!(max_rect);
 
     // However, after using "max" the original rectangle is lost..
-    //println!("{}", rectangle1.width); // this throws an error, can't use rectangle1 after it's moved
+    println!("{:?}", rectangle1); // this throws an error, can't use rectangle1 after it's moved
 }
 
 #[derive(Debug, Copy, Clone)]
@@ -182,6 +184,7 @@ impl Rectangle {
         }
     }
 
+    #[allow(dead_code)]
     fn set_to_max(&mut self, rectangle2: Rectangle) {
         // we can do this because Rectangle does not own any heap data..
         // BUT must add the Copy, Clone derive to the Rectangle struct
